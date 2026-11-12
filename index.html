@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Sistema de Control de Asistencia Docente - Unidad Educativa Antofagasta">
+
+    <title>Asistencia Docente | U.E. Antofagasta</title>
+
+    <link rel="stylesheet" href="./css/estilos.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <!-- PANTALLA DE INICIO DE SESION -->
+    <section id="login-screen" class="login-screen">
+
+        <div class="login-card">
+
+            <div class="login-logo">
+                <img src="./assets/img/logo-antofagasta.png" alt="Escudo oficial U.E. Técnico Humanístico Antofagasta">
+            </div>
+
+            <h1>U.E. TÉCNICO HUMANÍSTICO ANTOFAGASTA</h1>
+
+            <p class="login-subtitle">
+                Sistema de Control de Asistencia Docente
+            </p>
+
+            <form id="login-form">
+
+                <div class="form-group">
+                    <label for="login-email">Correo electrónico</label>
+
+                    <input type="email" id="login-email" placeholder="Ingrese su correo" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="login-password">Contraseña</label>
+
+                    <input type="password" id="login-password" placeholder="Ingrese su contraseña" required>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    Iniciar sesión
+                </button>
+
+                <p id="login-message" class="form-message"></p>
+
+            </form>
+
+            <div class="login-footer">
+                Sistema institucional de asistencia
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- APLICACION PRINCIPAL -->
+    <div id="app" class="app-container hidden">
+
+        <!-- MENU LATERAL -->
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-brand">
+
+                <div class="brand-icon">
+                    <img src="./assets/img/logo-antofagasta.png" alt="Logo institucional">
+                </div>
+
+                <div>
+                    <h2>ANTOFAGASTA</h2>
+                    <span>Control Docente</span>
+                </div>
+
+            </div>
+
+
+            <div class="sidebar-section">
+                <span class="sidebar-label">PRINCIPAL</span>
+
+                <button class="nav-item active" data-page="dashboard">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Dashboard</span>
+                </button>
+
+                <button class="nav-item" data-page="asistencias">
+                    <i data-lucide="calendar-check"></i>
+                    <span>Asistencias</span>
+                </button>
+            </div>
+
+
+
+            <div class="sidebar-section">
+                <span class="sidebar-label">ADMINISTRACIÓN</span>
+
+                <button class="nav-item" data-page="docentes">
+                    <i data-lucide="users"></i>
+                    <span>Docentes</span>
+                </button>
+
+                <button class="nav-item" data-page="tarjetas">
+                    <i data-lucide="contact"></i>
+                    <span>Tarjetas RFID</span>
+                </button>
+
+                <button class="nav-item" data-page="horarios">
+                    <i data-lucide="clock"></i>
+                    <span>Horarios</span>
+                </button>
+
+                <button class="nav-item" data-page="mantenimiento">
+                    <i data-lucide="database-backup"></i>
+                    <span>Mantenimiento</span>
+                </button>
+            </div>
+
+
+
+            <div class="sidebar-section">
+                <span class="sidebar-label">INFORMES</span>
+
+                <button class="nav-item" data-page="reportes">
+                    <i data-lucide="file-chart-column"></i>
+                    <span>Reportes</span>
+                </button>
+            </div>
+
+
+            <div class="sidebar-bottom">
+
+                <div class="admin-profile">
+                    <div class="admin-avatar">
+                        <i data-lucide="user-round"></i>
+                    </div>
+
+                    <div class="admin-info">
+                        <strong id="admin-name">Administrador</strong>
+                        <span>Administrador</span>
+                    </div>
+                </div>
+
+                <button id="logout-button" class="logout-button">
+                    <i data-lucide="log-out"></i>
+                    Cerrar sesión
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <button id="menu-toggle" class="menu-toggle">
+                    <i data-lucide="menu"></i>
+                </button>
+
+                <div class="topbar-title">
+                    <span>UNIDAD EDUCATIVA</span>
+                    <h2>Antofagasta</h2>
+                </div>
+
+                <div class="topbar-status">
+                    <span class="status-indicator"></span>
+                    Sistema institucional
+                </div>
+
+            </header>
+
+
+            <div class="page-container">
+
+                <!-- DASHBOARD -->
+                <section id="page-dashboard" class="page active">
+
+                    <div class="page-heading">
+                        <div>
+                            <h1>Panel de control</h1>
+                            <p>Resumen general de asistencia docente.</p>
+                        </div>
+
+                        <div class="current-date" id="current-date"></div>
+                    </div>
+
+
+                    <div class="stats-grid">
+
+                        <article class="stat-card">
+                            <div class="stat-icon blue">
+                                <i data-lucide="users"></i>
+                            </div>
+
+                            <div>
+                                <span>Total docentes</span>
+                                <h2 id="stat-docentes">0</h2>
+                            </div>
+                        </article>
+
+
+                        <article class="stat-card">
+                            <div class="stat-icon green">
+                                <i data-lucide="user-check"></i>
+                            </div>
+
+                            <div>
+                                <span>Asistencias de hoy</span>
+                                <h2 id="stat-asistencias">0</h2>
+                            </div>
+                        </article>
+
+
+                        <article class="stat-card">
+                            <div class="stat-icon orange">
+                                <i data-lucide="clock"></i>
+                            </div>
+
+                            <div>
+                                <span>Atrasos de hoy</span>
+                                <h2 id="stat-atrasos">0</h2>
+                            </div>
+                        </article>
+
+
+                        <article class="stat-card">
+                            <div class="stat-icon purple">
+                                <i data-lucide="credit-card"></i>
+                            </div>
+
+                            <div>
+                                <span>Tarjetas activas</span>
+                                <h2 id="stat-tarjetas">0</h2>
+                            </div>
+                        </article>
+
+                    </div>
+
+
+                    <div class="content-card">
+
+                        <div class="card-heading">
+                            <div>
+                                <h3>Últimas marcaciones</h3>
+                                <p>Registro de asistencia docente del día.</p>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>DOCENTE</th>
+                                        <th>FECHA</th>
+                                        <th>HORA</th>
+                                        <th>TIPO</th>
+                                        <th>ESTADO</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="dashboard-attendance">
+                                    <tr>
+                                        <td colspan="5" class="empty-state">
+                                            No hay marcaciones para mostrar.
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- MODULOS -->
+                <section id="page-docentes" class="page">
+                    <div class="page-heading">
+                        <div>
+                            <h1>Gestión de docentes</h1>
+                            <p>Registro y administración del personal docente.</p>
+                        </div>
+                    </div>
+
+                    <div id="docentes-content"></div>
+                </section>
+
+
+                <section id="page-tarjetas" class="page">
+                    <div class="page-heading">
+                        <div>
+                            <h1>Tarjetas RFID</h1>
+                            <p>Asignación y administración de tarjetas.</p>
+                        </div>
+                    </div>
+
+                    <div id="tarjetas-content"></div>
+                </section>
+
+
+                <section id="page-asistencias" class="page">
+                    <div class="page-heading">
+                        <div>
+                            <h1>Control de asistencias</h1>
+                            <p>Consulta de entradas y salidas docentes.</p>
+                        </div>
+                    </div>
+
+                    <div id="asistencias-content"></div>
+                </section>
+
+
+                <section id="page-horarios" class="page">
+                    <div class="page-heading">
+                        <div>
+                            <h1>Gestión de horarios</h1>
+                            <p>Configuración de horarios y tolerancias.</p>
+                        </div>
+                    </div>
+
+                    <div id="horarios-content"></div>
+                </section>
+
+
+
+                <section id="page-mantenimiento" class="page">
+
+                    <div class="page-heading">
+                        <div>
+                            <h1>Mantenimiento del sistema</h1>
+                            <p>
+                                Administración y limpieza de datos de prueba.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div id="mantenimiento-content"></div>
+
+                </section>
+
+
+
+                <section id="page-reportes" class="page">
+                    <div class="page-heading">
+                        <div>
+                            <h1>Reportes</h1>
+                            <p>Informes y estadísticas de asistencia.</p>
+                        </div>
+                    </div>
+
+                    <div id="reportes-content"></div>
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <script type="module" src="./js/docentes.js"></script>
+    <script type="module" src="./js/auth.js"></script>
+    <script type="module" src="./js/asistencias.js"></script>
+    <script type="module" src="./js/horarios.js"></script>
+    <script type="module" src="./js/dashboard.js"></script>
+    <script type="module" src="./js/tarjetas.js"></script>
+    <script type="module" src="./js/mantenimiento.js"></script>
+</body>
+
+</html>
